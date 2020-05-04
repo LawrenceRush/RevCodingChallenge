@@ -1,33 +1,51 @@
 <apex:page controller="SeeGroceryListsController">
-    <apex:pageBlock title="Grocery Lists">
-       
-        <apex:pageBlockSection id="theTableBlock">
-        <apex:pageBlockTable value="{!GroceryLists}" var="List" rendered="{!IF(GroceryLists.size>0,true, false)}">
-            <apex:column value="{!List.Name}"/>
-           
+    <apex:form >
+        <apex:pageBlock title="Grocery Lists">
+            
+            <apex:pageBlockSection id="theTableBlock">
+                <apex:pageBlockTable value="{!GroceryLists}" var="List" rendered="{!IF(GroceryLists.size>0,true, false)}">
+                    <apex:column value="{!List.Name}"/>
+                    <apex:column headerValue="Name" >
+                    <apex:commandLink value="{!List.name}" reRender="out">
+                        <apex:param name="id" value="{!List.id}"/>
+                    </apex:commandLink>
+                </apex:column>
 
-        </apex:pageBlockTable>
+                    <apex:column headerValue="Action">
+                        <apex:commandButton value="Delete!" action="{!DeleteList}" rerender="theTableBlock" >               
+                            <apex:param name="eventId" value="{!List.Id}" assignTo="{!SelectedListId}"/>         
+                        </apex:commandButton>                   
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
             </apex:pageBlockSection>
+            <apex:outputPanel id="out">
+        <apex:detail subject="{!$CurrentPage.parameters.id}" relatedList="true" title="false"/>
+    </apex:outputPanel>
 
-    </apex:pageBlock>
-           			 <apex:pageMessages /> 
-     <apex:form >
-        <apex:pageBlock title="Submit New Case">
-            <p>Fill out this form for any problem/questions you may have.</p>
-    		<apex:pageBlockSection columns="1">
-        	
-        		<table>
-           		<tr>
-            		<td><apex:inputText label="Name:" value="{!NewList.Name}"/></td>
-            	</tr>
-            	
-            	<tr>
-            		<td><apex:commandButton value="Submit List"
-                                            action="{!submitList}"/></td>
-            	</tr>
-        		</table>
-    		</apex:pageBlockSection>
-    	</apex:pageBlock>
+        </apex:pageBlock>
+        
+        
     </apex:form>
-
+    
+    <apex:pageMessages /> 
+    <apex:form >
+        <apex:pageBlock title="Submit New List">
+            <p>Fill out this form for any problem/questions you may have.</p>
+            <apex:pageBlockSection columns="1">
+                
+                <table>
+                    <tr>
+                        <td><apex:inputText label="Name:" value="{!NewList.Name}"/></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><apex:commandButton value="Submit List"
+                                                action="{!submitList}"/></td>
+                    </tr>
+                </table>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    
 </apex:page>
