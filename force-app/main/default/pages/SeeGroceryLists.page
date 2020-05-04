@@ -1,0 +1,33 @@
+<apex:page controller="SeeGroceryListsController">
+    <apex:pageBlock title="Grocery Lists">
+       
+        <apex:pageBlockSection id="theTableBlock">
+        <apex:pageBlockTable value="{!GroceryLists}" var="List" rendered="{!IF(GroceryLists.size>0,true, false)}">
+            <apex:column value="{!List.Name}"/>
+           
+
+        </apex:pageBlockTable>
+            </apex:pageBlockSection>
+
+    </apex:pageBlock>
+           			 <apex:pageMessages /> 
+     <apex:form >
+        <apex:pageBlock title="Submit New Case">
+            <p>Fill out this form for any problem/questions you may have.</p>
+    		<apex:pageBlockSection columns="1">
+        	
+        		<table>
+           		<tr>
+            		<td><apex:inputText label="Name:" value="{!NewList.Name}"/></td>
+            	</tr>
+            	
+            	<tr>
+            		<td><apex:commandButton value="Submit List"
+                                            action="{!submitList}"/></td>
+            	</tr>
+        		</table>
+    		</apex:pageBlockSection>
+    	</apex:pageBlock>
+    </apex:form>
+
+</apex:page>
